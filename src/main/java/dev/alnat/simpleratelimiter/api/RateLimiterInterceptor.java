@@ -14,7 +14,7 @@ import static dev.alnat.simpleratelimiter.api.Const.*;
 
 @Component
 @RequiredArgsConstructor
-public class LimiterInterceptor implements HandlerInterceptor {
+public class RateLimiterInterceptor implements HandlerInterceptor {
 
     private final LimiterService limiterService;
 
@@ -29,7 +29,7 @@ public class LimiterInterceptor implements HandlerInterceptor {
 
         var bucketOpt =  limiterService.resolveBucket(apiKey);
         if (bucketOpt.isEmpty()) {
-            response.sendError(HttpStatus.FORBIDDEN.value(), "There is not client with key: " + apiKey);
+            response.sendError(HttpStatus.FORBIDDEN.value(), "Invalid auth key: " + apiKey);
             return false;
         }
 
@@ -45,4 +45,5 @@ public class LimiterInterceptor implements HandlerInterceptor {
         response.sendError(HttpStatus.TOO_MANY_REQUESTS.value(), "You have exhausted your API Request Quota");
         return false;
     }
+
 }

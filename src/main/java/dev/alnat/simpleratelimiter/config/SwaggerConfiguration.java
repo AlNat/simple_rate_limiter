@@ -31,7 +31,7 @@ public class SwaggerConfiguration {
                     .in(ParameterIn.HEADER.toString())
                     .schema(new StringSchema())
                     .name(Const.API_KEY_HEADER)
-                    .description("Auth key of client")
+                    .description("Auth key")
                     .required(true);
             operation.addParametersItem(authKeyParam);
             return operation;

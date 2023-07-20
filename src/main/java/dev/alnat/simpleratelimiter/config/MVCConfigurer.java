@@ -1,6 +1,6 @@
 package dev.alnat.simpleratelimiter.config;
 
-import dev.alnat.simpleratelimiter.api.LimiterInterceptor;
+import dev.alnat.simpleratelimiter.api.RateLimiterInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MVCConfigurer implements WebMvcConfigurer {
 
     @Autowired
-    private LimiterInterceptor interceptor;
+    private RateLimiterInterceptor interceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

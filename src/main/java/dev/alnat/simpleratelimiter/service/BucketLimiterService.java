@@ -28,7 +28,13 @@ public class BucketLimiterService implements LimiterService {
     public Optional<Bucket> resolveBucket(String key) {
         // If another thread creates new one in cache -- last will win
         if (!cache.containsKey(key)) {
-            var bucketOpt = initNewBucket(key);
+            Optional<Bucket> bucketOpt;
+            try {
+                bucketOpt = initNewBucket(key);
+            } catch (Exception e) {
+                return Optional.empty();
+            }
+
             if (bucketOpt.isEmpty()) {
                 return Optional.empty();
             }
@@ -38,7 +44,7 @@ public class BucketLimiterService implements LimiterService {
     }
 
     private Optional<Bucket> initNewBucket(String apiKey) {
-        var clientSettingsOpt = repository.findClientSettingByApiKey(apiKey);
+        var clientSettingsOpt = repository.findClientSettingByApiKey(apiKey.toUpperCase());
         if (clientSettingsOpt.isEmpty()) {
             return Optional.empty();
         }
@@ -55,6 +61,8 @@ public class BucketLimiterService implements LimiterService {
 
     @Override
     public void clearCache() {
+        cache.values().forEach(Bucket::reset);
         cache.clear();
     }
+
 }

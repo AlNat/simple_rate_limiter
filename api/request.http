@@ -4,4 +4,4 @@ GET http://localhost/api/v1/client/data/1
 ###
 
 GET http://localhost/api/v1/client/data/1
-X_API_KEY: test_key
+X-API-KEY: TEST_KEY
